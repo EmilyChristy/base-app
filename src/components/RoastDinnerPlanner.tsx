@@ -1,25 +1,38 @@
 "use client";
 
 import React, { useState } from "react";
-
-interface RoastItem {
-  id: string;
-  name: string;
-  options: string[];
-}
-
-interface CookingStep {
-  time: number;
-  description: string;
-}
+import { StarIcon } from "@heroicons/react/16/solid";
+// interface RoastItem {
+//   id: string;
+//   name: string;
+//   options: string[];
+// }
 
 interface CookingPlan {
   totalTime: number;
   steps: CookingStep[];
 }
 
+interface CookingStep {
+  stepNumber: number;
+  time: number;
+  description: string;
+  cookingItem: Item;
+}
+
+interface Item {
+  id: number;
+  type: string;
+  name: string;
+  prepTime: number;
+  cookingTime: number;
+  restingTime: number;
+  options: string[];
+}
+
 interface SelectedItem {
-  category: string;
+  id: number;
+  // category: string;
   item: string;
 }
 
@@ -28,82 +41,91 @@ export default function RoastDinnerPlanner() {
   const [servings, setServings] = useState<number>(4);
   const [generatedPlan, setGeneratedPlan] = useState<CookingPlan | null>(null);
 
-  const roastItems: RoastItem[] = [
+  const roastItems: Item[] = [
     {
-      id: "meat",
+      id: 1,
+      type: "meat",
       name: "Roast Meat",
+      prepTime: 12,
+      cookingTime: 20,
+      restingTime: 0,
       options: ["Beef", "Chicken", "Lamb", "Pork"],
     },
     {
-      id: "potatoes",
+      id: 2,
+      type: "potatoes",
       name: "Potatoes",
+      prepTime: 12,
+      cookingTime: 20,
+      restingTime: 0,
       options: ["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
     },
     {
-      id: "vegetables",
+      id: 3,
+      type: "vegetables",
       name: "Vegetables",
+      prepTime: 12,
+      cookingTime: 20,
+      restingTime: 0,
       options: ["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
     },
     {
-      id: "accompaniments",
+      id: 4,
+      type: "accompaniments",
       name: "Accompaniments",
+      prepTime: 12,
+      cookingTime: 20,
+      restingTime: 0,
       options: ["Yorkshire Pudding", "Gravy", "Stuffing"],
     },
   ];
 
-  const handleItemSelect = (category: string, item: string) => {
+  //Add the selected item to the list of cooking items
+  const handleItemSelect = (id: number, item: string) => {
+    debugger;
     const updatedSelection = [...selectedItems];
-    const existingCategoryIndex = updatedSelection.findIndex(
-      (s) => s.category === category
-    );
+    updatedSelection.push({ id, item });
 
-    if (existingCategoryIndex !== -1) {
-      updatedSelection[existingCategoryIndex] = { category, item };
-    } else {
-      updatedSelection.push({ category, item });
-    }
+    // const existingCategoryIndex = updatedSelection.findIndex(
+    //   (s) => s.id === id
+    // );
+
+    // if (existingCategoryIndex !== -1) {
+    //   updatedSelection[existingCategoryIndex] = { id, item };
+    // } else {
+    //   updatedSelection.push({ id, item });
+    // }
 
     setSelectedItems(updatedSelection);
   };
 
+  // Get the list if selected items, order them by totalTime descending and
+  // generate the step by step plan
   const generatePlan = () => {
-    // Placeholder for plan generation logic
-    setGeneratedPlan({
-      totalTime: 120,
-      steps: [
-        { time: 0, description: "Preheat oven to 180°C" },
-        { time: 15, description: "Prepare meat and season" },
-        { time: 45, description: "Start roasting meat" },
-        { time: 60, description: "Prepare vegetables" },
-      ],
-    });
+    // Get the list of selected items and sort them by their total time
+
+    console.log(selectedItems, "Selected items");
+
+    // setGeneratedPlan({
+    //   totalTime: 120,
+    //   steps: [
+    //     { stepNumber: 1, time: 0, description: "Preheat oven to 180°C", cookingItem:[]] },
+    //     { stepNumber: 2, time: 15, description: "Prepare meat and season" },
+    //     { stepNumber: 3, time: 45, description: "Start roasting meat" },
+    //     { stepNumber: 4, time: 60, description: "Prepare vegetables" },
+    //   ],
+    // });
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="roastdinner  px-0 py-8 border-2 border-cyan-400">
       <section className="mb-8">
         <div className="flex items-center mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-2 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.768-.231-1.477-.638-2.022M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.768.231-1.477.638-2.022M14 10h2c0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7h2"
-            />
-          </svg>
-          <label className="text-lg font-semibold mr-4">
-            Number of Servings
-          </label>
+          <h2>Number of Servings</h2>
           <select
             value={servings}
             onChange={(e) => setServings(Number(e.target.value))}
-            className="p-2 border rounded-lg"
+            className="ml-2 p-2 border rounded-lg"
           >
             {[2, 4, 6, 8].map((num) => (
               <option key={num} value={num}>
@@ -114,33 +136,20 @@ export default function RoastDinnerPlanner() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
-          {roastItems.map((category) => (
-            <div key={category.id} className="bg-gray-50 p-4 rounded-xl">
-              <h2 className="text-xl font-semibold mb-3 flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2 text-blue-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                {category.name}
+          {roastItems.map((roastItem) => (
+            <div key={roastItem.id} className="bg-gray-50 p-4 rounded-xl">
+              <h2 className="text-lg mb-3 flex items-center">
+                <StarIcon className="mr-1 mb-0.5 size-6 text-blue-500" />
+                {roastItem.name}
               </h2>
               <div className="grid grid-cols-2 gap-2">
-                {category.options.map((item) => (
+                {roastItem.options.map((item) => (
                   <button
                     key={item}
-                    onClick={() => handleItemSelect(category.id, item)}
+                    onClick={() => handleItemSelect(roastItem.id, item)}
                     className={`p-2 rounded-lg transition-all ${
                       selectedItems.some(
-                        (s) => s.category === category.id && s.item === item
+                        (s) => s.id === roastItem.id && s.item === item
                       )
                         ? "bg-blue-500 text-white"
                         : "bg-white border hover:bg-blue-100"
@@ -161,40 +170,14 @@ export default function RoastDinnerPlanner() {
           disabled={selectedItems.length === 0}
           className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+          <StarIcon className="size-6 text-blue-500" />
           Generate Cooking Plan
         </button>
 
         {generatedPlan && (
           <div className="mt-6 bg-gray-50 p-6 rounded-xl">
             <h2 className="text-2xl font-bold mb-4 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7 mr-3 text-blue-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              <StarIcon className="size-6 text-blue-500" />
               Cooking Timeline
             </h2>
             <div className="space-y-3">
