@@ -8,6 +8,20 @@ import { StarIcon } from "@heroicons/react/16/solid";
 //   options: string[];
 // }
 
+enum ItemType {
+  Main = "main",
+  Vegetables = "vegetables",
+  Potatoes = "potatoes",
+  Accompaniments = "accompaniments",
+}
+
+// enum MainType {
+//   Beef = "beef",
+//   Chicken = "chicken",
+//   Lamb = "lamb",
+//   Pork = "pork",
+// }
+
 interface CookingPlan {
   totalTime: number;
   steps: CookingStep[];
@@ -22,79 +36,181 @@ interface CookingStep {
 
 interface Item {
   id: number;
-  type: string;
+  type: ItemType;
+  name: string;
+  cookingItems: CookingItem[];
+}
+
+interface CookingItem {
+  id: number;
   name: string;
   prepTime: number;
   cookingTime: number;
   restingTime: number;
-  options: string[];
 }
 
 interface SelectedItem {
-  id: number;
-  // category: string;
-  item: string;
+  type: ItemType;
+  item: CookingItem;
 }
 
 export default function RoastDinnerPlanner() {
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  // const [selectedItems, setSelectedItems] = useState<CookingItem[]>([]);
   const [servings, setServings] = useState<number>(4);
   const [generatedPlan, setGeneratedPlan] = useState<CookingPlan | null>(null);
 
   const roastItems: Item[] = [
     {
       id: 1,
-      type: "meat",
-      name: "Roast Meat",
-      prepTime: 12,
-      cookingTime: 20,
-      restingTime: 0,
-      options: ["Beef", "Chicken", "Lamb", "Pork"],
+      type: ItemType.Main,
+      name: "Main event",
+      cookingItems: [
+        { id: 1, name: "Beef", prepTime: 5, cookingTime: 10, restingTime: 20 },
+        {
+          id: 2,
+          name: "Chicken",
+          prepTime: 5,
+          cookingTime: 10,
+          restingTime: 30,
+        },
+        { id: 3, name: "Lamb", prepTime: 5, cookingTime: 10, restingTime: 20 },
+        { id: 4, name: "Pork", prepTime: 5, cookingTime: 10, restingTime: 25 },
+        {
+          id: 5,
+          name: "Nut roast",
+          prepTime: 5,
+          cookingTime: 10,
+          restingTime: 0,
+        },
+      ],
     },
     {
       id: 2,
-      type: "potatoes",
+      type: ItemType.Potatoes,
       name: "Potatoes",
-      prepTime: 12,
-      cookingTime: 20,
-      restingTime: 0,
-      options: ["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
+      cookingItems: [
+        {
+          id: 1,
+          name: "Roast potatoes",
+          prepTime: 5,
+          cookingTime: 10,
+          restingTime: 0,
+        },
+        {
+          id: 2,
+          name: "Mashed potatoes",
+          prepTime: 5,
+          cookingTime: 10,
+          restingTime: 0,
+        },
+        {
+          id: 3,
+          name: "Dauphinois",
+          prepTime: 5,
+          cookingTime: 10,
+          restingTime: 0,
+        },
+        { id: 4, name: "Boiled", prepTime: 5, cookingTime: 10, restingTime: 0 },
+      ], //["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
     },
     {
       id: 3,
-      type: "vegetables",
+      type: ItemType.Vegetables,
       name: "Vegetables",
-      prepTime: 12,
-      cookingTime: 20,
-      restingTime: 0,
-      options: ["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
+      cookingItems: [
+        {
+          id: 1,
+          name: "Roasted carrots",
+          prepTime: 10,
+          cookingTime: 40,
+          restingTime: 0,
+        },
+        {
+          id: 2,
+          name: "Roasted parsnips",
+          prepTime: 10,
+          cookingTime: 45,
+          restingTime: 0,
+        },
+      ], //["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
     },
     {
       id: 4,
-      type: "accompaniments",
+      type: ItemType.Accompaniments,
       name: "Accompaniments",
-      prepTime: 12,
-      cookingTime: 20,
-      restingTime: 0,
-      options: ["Yorkshire Pudding", "Gravy", "Stuffing"],
+      cookingItems: [
+        {
+          id: 1,
+          name: "Yorkshire pudding",
+          prepTime: 15,
+          cookingTime: 20,
+          restingTime: 0,
+        },
+        {
+          id: 2,
+          name: "Stuffing",
+          prepTime: 10,
+          cookingTime: 40,
+          restingTime: 0,
+        },
+      ], //["Yorkshire Pudding", "Gravy", "Stuffing"],
     },
   ];
 
+  // const roastItemsOLD: Item[] = [
+  //   {
+  //     id: 1,
+  //     type: ItemType.Main,
+  //     name: "Roast Meat",
+  //     prepTime: 12,
+  //     cookingTime: 20,
+  //     restingTime: 0,
+  //     options: ["Beef", "Chicken", "Lamb", "Pork"],
+  //   },
+  //   {
+  //     id: 2,
+  //     type: ItemType.Potatoes,
+  //     name: "Potatoes",
+  //     prepTime: 12,
+  //     cookingTime: 20,
+  //     restingTime: 0,
+  //     options: ["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
+  //   },
+  //   {
+  //     id: 3,
+  //     type: ItemType.Vegetables,
+  //     name: "Vegetables",
+  //     prepTime: 12,
+  //     cookingTime: 20,
+  //     restingTime: 0,
+  //     options: ["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
+  //   },
+  //   {
+  //     id: 4,
+  //     type: ItemType.Accompaniments,
+  //     name: "Accompaniments",
+  //     prepTime: 12,
+  //     cookingTime: 20,
+  //     restingTime: 0,
+  //     options: ["Yorkshire Pudding", "Gravy", "Stuffing"],
+  //   },
+  // ];
+
   //Add the selected item to the list of cooking items
-  const handleItemSelect = (id: number, item: string) => {
+  const handleItemSelect = (id: number, item: CookingItem, type: ItemType) => {
     debugger;
     const updatedSelection = [...selectedItems];
-    updatedSelection.push({ id, item });
 
-    // const existingCategoryIndex = updatedSelection.findIndex(
-    //   (s) => s.id === id
-    // );
+    const existingCategoryIndex = updatedSelection.findIndex(
+      (s) => s.item.name === item.name
+    );
 
-    // if (existingCategoryIndex !== -1) {
-    //   updatedSelection[existingCategoryIndex] = { id, item };
-    // } else {
-    //   updatedSelection.push({ id, item });
-    // }
+    if (existingCategoryIndex !== -1) {
+      updatedSelection[existingCategoryIndex] = { type, item };
+    } else {
+      updatedSelection.push({ type, item });
+    }
 
     setSelectedItems(updatedSelection);
   };
@@ -104,7 +220,11 @@ export default function RoastDinnerPlanner() {
   const generatePlan = () => {
     // Get the list of selected items and sort them by their total time
 
-    console.log(selectedItems, "Selected items");
+    let plan = selectedItems.sort();
+
+    console.log(plan, "The plan");
+
+    // setGeneratedPlan(plan);
 
     // setGeneratedPlan({
     //   totalTime: 120,
@@ -143,19 +263,27 @@ export default function RoastDinnerPlanner() {
                 {roastItem.name}
               </h2>
               <div className="grid grid-cols-2 gap-2">
-                {roastItem.options.map((item) => (
+                {/* {roastItem.options.map((item) => ( */}
+
+                {roastItem.cookingItems.map((cookingItem) => (
                   <button
-                    key={item}
-                    onClick={() => handleItemSelect(roastItem.id, item)}
+                    key={cookingItem.name}
+                    onClick={() =>
+                      handleItemSelect(
+                        roastItem.id,
+                        cookingItem,
+                        roastItem.type
+                      )
+                    }
                     className={`p-2 rounded-lg transition-all ${
                       selectedItems.some(
-                        (s) => s.id === roastItem.id && s.item === item
+                        (s) => s.item.name === cookingItem.name
                       )
                         ? "bg-blue-500 text-white"
                         : "bg-white border hover:bg-blue-100"
                     }`}
                   >
-                    {item}
+                    {cookingItem.name}
                   </button>
                 ))}
               </div>
