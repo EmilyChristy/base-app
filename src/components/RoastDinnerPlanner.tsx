@@ -2,11 +2,6 @@
 
 import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/16/solid";
-// interface RoastItem {
-//   id: string;
-//   name: string;
-//   options: string[];
-// }
 
 enum ItemType {
   Main = "main",
@@ -15,6 +10,30 @@ enum ItemType {
   Accompaniments = "accompaniments",
 }
 
+class CookingItemImpl implements CookingItem {
+  id: number;
+  name: string;
+  prepTime: number;
+  cookingTime: number;
+  restingTime: number;
+  totalTime?: number;
+
+  constructor(
+    id: number,
+    name: string,
+    prepTime: number,
+    cookingTime: number,
+    restingTime: number,
+    totalTime?: number
+  ) {
+    this.id = id;
+    this.name = name;
+    this.prepTime = prepTime;
+    this.cookingTime = cookingTime;
+    this.restingTime = restingTime;
+    this.totalTime = prepTime + cookingTime + restingTime;
+  }
+}
 // enum MainType {
 //   Beef = "beef",
 //   Chicken = "chicken",
@@ -38,7 +57,7 @@ interface Item {
   id: number;
   type: ItemType;
   name: string;
-  cookingItems: CookingItem[];
+  cookingItems: CookingItemImpl; //CookingItem[];
 }
 
 interface CookingItem {
@@ -47,11 +66,12 @@ interface CookingItem {
   prepTime: number;
   cookingTime: number;
   restingTime: number;
+  totalTime?: number;
 }
 
 interface SelectedItem {
   type: ItemType;
-  item: CookingItem;
+  item: CookingItemImpl;
 }
 
 export default function RoastDinnerPlanner() {
@@ -112,7 +132,7 @@ export default function RoastDinnerPlanner() {
           restingTime: 0,
         },
         { id: 4, name: "Boiled", prepTime: 5, cookingTime: 10, restingTime: 0 },
-      ], //["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
+      ],
     },
     {
       id: 3,
@@ -133,7 +153,7 @@ export default function RoastDinnerPlanner() {
           cookingTime: 45,
           restingTime: 0,
         },
-      ], //["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
+      ],
     },
     {
       id: 4,
@@ -154,7 +174,7 @@ export default function RoastDinnerPlanner() {
           cookingTime: 40,
           restingTime: 0,
         },
-      ], //["Yorkshire Pudding", "Gravy", "Stuffing"],
+      ],
     },
   ];
 
@@ -198,8 +218,12 @@ export default function RoastDinnerPlanner() {
   // ];
 
   //Add the selected item to the list of cooking items
-  const handleItemSelect = (id: number, item: CookingItem, type: ItemType) => {
-    debugger;
+  const handleItemSelect = (
+    id: number,
+    item: CookingItemImpl,
+    type: ItemType
+  ) => {
+    // debugger;
     const updatedSelection = [...selectedItems];
 
     const existingCategoryIndex = updatedSelection.findIndex(
@@ -221,6 +245,8 @@ export default function RoastDinnerPlanner() {
     // Get the list of selected items and sort them by their total time
 
     let plan = selectedItems.sort();
+
+    // setGeneratedPlan(plan);
 
     console.log(plan, "The plan");
 
