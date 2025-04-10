@@ -10,55 +10,17 @@ enum ItemType {
   Accompaniments = "accompaniments",
 }
 
-class CookingItemImpl implements CookingItem {
-  id: number;
-  name: string;
-  prepTime: number;
-  cookingTime: number;
-  restingTime: number;
-  totalTime?: number;
-
-  constructor(
-    id: number,
-    name: string,
-    prepTime: number,
-    cookingTime: number,
-    restingTime: number,
-    totalTime?: number
-  ) {
-    this.id = id;
-    this.name = name;
-    this.prepTime = prepTime;
-    this.cookingTime = cookingTime;
-    this.restingTime = restingTime;
-    this.totalTime = prepTime + cookingTime + restingTime;
-  }
-}
-// enum MainType {
-//   Beef = "beef",
-//   Chicken = "chicken",
-//   Lamb = "lamb",
-//   Pork = "pork",
+// interface CookingPlan {
+//   totalTime: number;
+//   steps: CookingStep[];
 // }
 
-interface CookingPlan {
-  totalTime: number;
-  steps: CookingStep[];
-}
-
-interface CookingStep {
-  stepNumber: number;
-  time: number;
-  description: string;
-  cookingItem: Item;
-}
-
-interface Item {
-  id: number;
-  type: ItemType;
-  name: string;
-  cookingItems: CookingItemImpl; //CookingItem[];
-}
+// interface CookingStep {
+//   stepNumber: number;
+//   time: number;
+//   description: string;
+//   cookingItem: Item;
+// }
 
 interface CookingItem {
   id: number;
@@ -69,171 +31,117 @@ interface CookingItem {
   totalTime?: number;
 }
 
-interface SelectedItem {
+interface CookingItemSelected extends CookingItem {
+  type?: ItemType;
+}
+
+interface CookingGroup {
   type: ItemType;
-  item: CookingItemImpl;
+  name: string;
+  items: CookingItem[];
 }
 
 export default function RoastDinnerPlanner() {
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  // const [selectedItems, setSelectedItems] = useState<CookingItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<CookingItemSelected[]>([]);
   const [servings, setServings] = useState<number>(4);
-  const [generatedPlan, setGeneratedPlan] = useState<CookingPlan | null>(null);
+  const [generatedPlan, setGeneratedPlan] = useState<
+    CookingItemSelected[] | null
+  >(null);
 
-  const roastItems: Item[] = [
+  const roastItemsGrouped: CookingGroup[] = [
     {
-      id: 1,
       type: ItemType.Main,
-      name: "Main event",
-      cookingItems: [
-        { id: 1, name: "Beef", prepTime: 5, cookingTime: 10, restingTime: 20 },
+      name: "Mains",
+      items: [
+        {
+          id: 1,
+          name: "Beef",
+          prepTime: 10,
+          cookingTime: 120,
+          restingTime: 30,
+        },
         {
           id: 2,
           name: "Chicken",
-          prepTime: 5,
-          cookingTime: 10,
+          prepTime: 15,
+          cookingTime: 90,
           restingTime: 30,
-        },
-        { id: 3, name: "Lamb", prepTime: 5, cookingTime: 10, restingTime: 20 },
-        { id: 4, name: "Pork", prepTime: 5, cookingTime: 10, restingTime: 25 },
-        {
-          id: 5,
-          name: "Nut roast",
-          prepTime: 5,
-          cookingTime: 10,
-          restingTime: 0,
-        },
-      ],
-    },
-    {
-      id: 2,
-      type: ItemType.Potatoes,
-      name: "Potatoes",
-      cookingItems: [
-        {
-          id: 1,
-          name: "Roast potatoes",
-          prepTime: 5,
-          cookingTime: 10,
-          restingTime: 0,
-        },
-        {
-          id: 2,
-          name: "Mashed potatoes",
-          prepTime: 5,
-          cookingTime: 10,
-          restingTime: 0,
         },
         {
           id: 3,
-          name: "Dauphinois",
+          name: "Pork",
+          prepTime: 10,
+          cookingTime: 120,
+          restingTime: 20,
+        },
+      ],
+    },
+    {
+      type: ItemType.Potatoes,
+      name: "Potatoes",
+      items: [
+        {
+          id: 4,
+          name: "Roast",
           prepTime: 5,
-          cookingTime: 10,
-          restingTime: 0,
-        },
-        { id: 4, name: "Boiled", prepTime: 5, cookingTime: 10, restingTime: 0 },
-      ],
-    },
-    {
-      id: 3,
-      type: ItemType.Vegetables,
-      name: "Vegetables",
-      cookingItems: [
-        {
-          id: 1,
-          name: "Roasted carrots",
-          prepTime: 10,
-          cookingTime: 40,
+          cookingTime: 60,
           restingTime: 0,
         },
         {
-          id: 2,
-          name: "Roasted parsnips",
-          prepTime: 10,
-          cookingTime: 45,
-          restingTime: 0,
-        },
-      ],
-    },
-    {
-      id: 4,
-      type: ItemType.Accompaniments,
-      name: "Accompaniments",
-      cookingItems: [
-        {
-          id: 1,
-          name: "Yorkshire pudding",
+          id: 5,
+          name: "Dauphinoise",
           prepTime: 15,
-          cookingTime: 20,
+          cookingTime: 60,
           restingTime: 0,
         },
         {
-          id: 2,
-          name: "Stuffing",
-          prepTime: 10,
-          cookingTime: 40,
+          id: 6,
+          name: "Boiled",
+          prepTime: 5,
+          cookingTime: 25,
+          restingTime: 0,
+        },
+      ],
+    },
+    {
+      type: ItemType.Vegetables,
+      name: "Boiled vegetables",
+      items: [
+        {
+          id: 7,
+          name: "Carrots",
+          prepTime: 5,
+          cookingTime: 15,
+          restingTime: 0,
+        },
+        {
+          id: 8,
+          name: "Peas",
+          prepTime: 1,
+          cookingTime: 10,
           restingTime: 0,
         },
       ],
     },
   ];
 
-  // const roastItemsOLD: Item[] = [
-  //   {
-  //     id: 1,
-  //     type: ItemType.Main,
-  //     name: "Roast Meat",
-  //     prepTime: 12,
-  //     cookingTime: 20,
-  //     restingTime: 0,
-  //     options: ["Beef", "Chicken", "Lamb", "Pork"],
-  //   },
-  //   {
-  //     id: 2,
-  //     type: ItemType.Potatoes,
-  //     name: "Potatoes",
-  //     prepTime: 12,
-  //     cookingTime: 20,
-  //     restingTime: 0,
-  //     options: ["Roast Potatoes", "Mashed Potatoes", "Dauphinoise"],
-  //   },
-  //   {
-  //     id: 3,
-  //     type: ItemType.Vegetables,
-  //     name: "Vegetables",
-  //     prepTime: 12,
-  //     cookingTime: 20,
-  //     restingTime: 0,
-  //     options: ["Roasted Carrots", "Broccoli", "Parsnips", "Peas"],
-  //   },
-  //   {
-  //     id: 4,
-  //     type: ItemType.Accompaniments,
-  //     name: "Accompaniments",
-  //     prepTime: 12,
-  //     cookingTime: 20,
-  //     restingTime: 0,
-  //     options: ["Yorkshire Pudding", "Gravy", "Stuffing"],
-  //   },
-  // ];
-
   //Add the selected item to the list of cooking items
-  const handleItemSelect = (
-    id: number,
-    item: CookingItemImpl,
-    type: ItemType
-  ) => {
+  const handleItemSelect = (id: number, item: CookingItem, type: ItemType) => {
     // debugger;
     const updatedSelection = [...selectedItems];
 
-    const existingCategoryIndex = updatedSelection.findIndex(
-      (s) => s.item.name === item.name
+    //make sure we only add the item to the list once
+    const doesAlreadyExist = selectedItems.find(
+      (existingItem) => existingItem.id === item.id
     );
 
-    if (existingCategoryIndex !== -1) {
-      updatedSelection[existingCategoryIndex] = { type, item };
-    } else {
-      updatedSelection.push({ type, item });
+    if (doesAlreadyExist == undefined) {
+      //add type
+      const selected_item: CookingItemSelected = {
+        ...item,
+        type: type,
+      };
+      updatedSelection.push(selected_item);
     }
 
     setSelectedItems(updatedSelection);
@@ -243,28 +151,14 @@ export default function RoastDinnerPlanner() {
   // generate the step by step plan
   const generatePlan = () => {
     // Get the list of selected items and sort them by their total time
+    // debugger;
+    const plan = selectedItems.sort();
 
-    let plan = selectedItems.sort();
-
-    // setGeneratedPlan(plan);
-
-    console.log(plan, "The plan");
-
-    // setGeneratedPlan(plan);
-
-    // setGeneratedPlan({
-    //   totalTime: 120,
-    //   steps: [
-    //     { stepNumber: 1, time: 0, description: "Preheat oven to 180°C", cookingItem:[]] },
-    //     { stepNumber: 2, time: 15, description: "Prepare meat and season" },
-    //     { stepNumber: 3, time: 45, description: "Start roasting meat" },
-    //     { stepNumber: 4, time: 60, description: "Prepare vegetables" },
-    //   ],
-    // });
+    setGeneratedPlan(plan);
   };
 
   return (
-    <div className="roastdinner  px-0 py-8 border-2 border-cyan-400">
+    <div className="roastdinner  px-0 py-8 border-0 border-cyan-400">
       <section className="mb-8">
         <div className="flex items-center mb-4">
           <h2>Number of Servings</h2>
@@ -282,29 +176,28 @@ export default function RoastDinnerPlanner() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
-          {roastItems.map((roastItem) => (
-            <div key={roastItem.id} className="bg-gray-50 p-4 rounded-xl">
+          {roastItemsGrouped.map((roastItemGroup) => (
+            <div
+              key={roastItemGroup.name}
+              className="bg-gray-50 p-4 rounded-xl"
+            >
               <h2 className="text-lg mb-3 flex items-center">
                 <StarIcon className="mr-1 mb-0.5 size-6 text-blue-500" />
-                {roastItem.name}
+                {roastItemGroup.name}
               </h2>
               <div className="grid grid-cols-2 gap-2">
-                {/* {roastItem.options.map((item) => ( */}
-
-                {roastItem.cookingItems.map((cookingItem) => (
+                {roastItemGroup.items.map((cookingItem) => (
                   <button
-                    key={cookingItem.name}
+                    key={cookingItem.id}
                     onClick={() =>
                       handleItemSelect(
-                        roastItem.id,
+                        cookingItem.id,
                         cookingItem,
-                        roastItem.type
+                        roastItemGroup.type
                       )
                     }
                     className={`p-2 rounded-lg transition-all ${
-                      selectedItems.some(
-                        (s) => s.item.name === cookingItem.name
-                      )
+                      selectedItems.some((s) => s.name === cookingItem.name)
                         ? "bg-blue-500 text-white"
                         : "bg-white border hover:bg-blue-100"
                     }`}
@@ -335,18 +228,22 @@ export default function RoastDinnerPlanner() {
               Cooking Timeline
             </h2>
             <div className="space-y-3">
-              {generatedPlan.steps.map((step, index) => (
+              {generatedPlan.map((step, index) => (
                 <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
                   <p className="font-semibold text-blue-600">
-                    {step.time} minutes
+                    {step.cookingTime} minutes
                   </p>
-                  <p>{step.description}</p>
+                  <p>
+                    {step.type} - {step.name}
+                  </p>
+                  <p>No description yet</p>
                 </div>
               ))}
             </div>
             <div className="mt-4 text-center">
               <p className="text-lg font-bold">
-                Total Cooking Time: {generatedPlan.totalTime} minutes
+                Total Cooking Time:
+                {/* {generatedPlan.totalTime} minutes */}
               </p>
             </div>
           </div>
