@@ -13,9 +13,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem] border-0 border-dotted border-blue-300"></div>
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
               <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0 border-0 border-dashed border-amber-500">
-                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
-                  Wotcha cookin&apos;?
-                </p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
                   Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
                   qui lorem cupidatat commodo.

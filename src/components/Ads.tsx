@@ -1,6 +1,6 @@
 const links = [
-  { name: "Roasting pans", href: "/pans", img: "" },
-  { name: "Blender", href: "/blender", img: "" },
+  { name: "Advert 1", href: "/ad1", img: "" },
+  { name: "Advert 2", href: "/ad2", img: "" },
 ];
 
 export default function Ads() {

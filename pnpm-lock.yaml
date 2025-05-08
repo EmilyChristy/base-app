@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@heroicons/react':
+        specifier: ^2.2.0
+        version: 2.2.0(react@19.0.0)
+      '@tanstack/react-query':
+        specifier: ^5.32.0
+        version: 5.75.5(react@19.0.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.32.0
+        version: 5.75.5(@tanstack/react-query@5.75.5(react@19.0.0))(react@19.0.0)
       next:
         specifier: 15.2.3
         version: 15.2.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -98,6 +107,11 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@heroicons/react@2.2.0':
+    resolution: {integrity: sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==}
+    peerDependencies:
+      react: '>= 16 || ^19.0.0-rc'
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -384,6 +398,23 @@ packages:
 
   '@tailwindcss/postcss@4.0.15':
     resolution: {integrity: sha512-qyrpoDKIO7wzkRbKCvGLo7gXRjT9/Njf7ZJiJhG4njrfZkvOhjwnaHpYbpxYeDysEg+9pB1R4jcd+vQ7ZUDsmQ==}
+
+  '@tanstack/query-core@5.75.5':
+    resolution: {integrity: sha512-kPDOxtoMn2Ycycb76Givx2fi+2pzo98F9ifHL/NFiahEDpDwSVW6o12PRuQ0lQnBOunhRG5etatAhQij91M3MQ==}
+
+  '@tanstack/query-devtools@5.74.7':
+    resolution: {integrity: sha512-nSNlfuGdnHf4yB0S+BoNYOE1o3oAH093weAYZolIHfS2stulyA/gWfSk/9H4ZFk5mAAHb5vNqAeJOmbdcGPEQw==}
+
+  '@tanstack/react-query-devtools@5.75.5':
+    resolution: {integrity: sha512-S31U00nJOQIbxydRH1kOwdLRaLBrda8O5QjzmgkRg60UZzPGdbI6+873Qa0YGUfPeILDbR2ukgWyg7CJQPy4iA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.75.5
+      react: ^18 || ^19
+
+  '@tanstack/react-query@5.75.5':
+    resolution: {integrity: sha512-QrLCJe40BgBVlWdAdf2ZEVJ0cISOuEy/HKupId1aTKU6gPJZVhSvZpH+Si7csRflCJphzlQ77Yx6gUxGW9o0XQ==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
@@ -1725,6 +1756,10 @@ snapshots:
       '@eslint/core': 0.12.0
       levn: 0.4.1
 
+  '@heroicons/react@2.2.0(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -1935,6 +1970,21 @@ snapshots:
       lightningcss: 1.29.2
       postcss: 8.5.3
       tailwindcss: 4.0.15
+
+  '@tanstack/query-core@5.75.5': {}
+
+  '@tanstack/query-devtools@5.74.7': {}
+
+  '@tanstack/react-query-devtools@5.75.5(@tanstack/react-query@5.75.5(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-devtools': 5.74.7
+      '@tanstack/react-query': 5.75.5(react@19.0.0)
+      react: 19.0.0
+
+  '@tanstack/react-query@5.75.5(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 5.75.5
+      react: 19.0.0
 
   '@tybys/wasm-util@0.9.0':
     dependencies:
