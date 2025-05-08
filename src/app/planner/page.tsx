@@ -3,9 +3,9 @@ import { DataList } from "@/components/DataList";
 export default function Page() {
   return (
     <>
-      <h1 className="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">
-        Data list
-      </h1>
+      <h3 className="mx-auto mt-6 mb-6 text-4xl font-bold tracking-tight text-balance text-gray-950 ">
+        Products
+      </h3>
       <DataList />
     </>
   );

@@ -22,8 +22,8 @@ export const DataList = () => {
       </div>
     );
   }
-
-  const products = productsQuery.data?.data;
+  const products = productsQuery.data;
+  console.log(products, "productsQuery");
 
   if (!products) return null;
 
@@ -32,19 +32,19 @@ export const DataList = () => {
       data={products}
       columns={[
         {
-          title: "Title",
-          field: "title",
-        },
-        {
-          title: "Created At",
-          field: "createdAt",
+          title: "Id",
+          field: "id",
           // Cell({ entry: { createdAt } }) {
           //   return <span>{formatDate(createdAt)}</span>;
           // },
         },
         {
-          title: "",
-          field: "id",
+          title: "Title",
+          field: "title",
+        },
+        {
+          title: "Price",
+          field: "price",
           // Cell({ entry: { id } }) {
           //   return <DeleteUser id={id} />;
           // },

@@ -2,13 +2,13 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
-import { Product, Meta } from "@/types/api";
+import { Product } from "@/types/api";
 
 export const getProducts = (
   { page }: { page?: number } = { page: 1 }
 ): Promise<{
   data: Product[];
-  meta: Meta;
+  // meta: Meta;
 }> => {
   return api.get(`/products`, {
     params: {
