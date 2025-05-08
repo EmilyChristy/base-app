@@ -28,24 +28,67 @@ interface CookingItem {
   prepTime: number;
   cookingTime: number;
   restingTime: number;
-  totalTime?: number;
+  readonly totalTime: number; // Mark as readonly since it will be calculated
 }
+
+// Create a class that implements this interface
+class CookingItemImpl implements CookingItem {
+  id: number;
+  name: string;
+  prepTime: number;
+  cookingTime: number;
+  restingTime: number;
+  totalTime: number;
+
+  constructor(data: CookingItem) {
+    this.id = data.id;
+    this.name = data.name;
+    this.prepTime = data.prepTime;
+    this.cookingTime = data.cookingTime;
+    this.restingTime = data.restingTime;
+    this.totalTime = data.totalTime;
+  }
+
+  // Define a getter for totalTime
+  // get totalTime(): number {
+  //   return this.prepTime + this.cookingTime + this.restingTime;
+  // }
+}
+
+// ----
 
 interface CookingItemSelected extends CookingItem {
   type?: ItemType;
 }
 
+// Implementation for the selected item
+class CookingItemSelectedImpl
+  extends CookingItemImpl
+  implements CookingItemSelected
+{
+  type?: ItemType;
+
+  constructor(data: CookingItemSelected) {
+    super(data);
+    this.type = data.type;
+  }
+}
+
+// ---
+
 interface CookingGroup {
   type: ItemType;
   name: string;
-  items: CookingItem[];
+  items: CookingItemImpl[];
 }
 
 export default function RoastDinnerPlanner() {
-  const [selectedItems, setSelectedItems] = useState<CookingItemSelected[]>([]);
+  const [selectedItems, setSelectedItems] = useState<CookingItemSelectedImpl[]>(
+    []
+  );
   const [servings, setServings] = useState<number>(4);
   const [generatedPlan, setGeneratedPlan] = useState<
-    CookingItemSelected[] | null
+    CookingItemSelectedImpl[] | null
   >(null);
 
   const roastItemsGrouped: CookingGroup[] = [
@@ -53,74 +96,90 @@ export default function RoastDinnerPlanner() {
       type: ItemType.Main,
       name: "Mains",
       items: [
-        {
+        new CookingItemImpl({
           id: 1,
+          name: "Roast Chicken",
+          prepTime: 15,
+          cookingTime: 60,
+          restingTime: 10,
+          totalTime: 120,
+        }),
+        new CookingItemImpl({
+          id: 2,
           name: "Beef",
           prepTime: 10,
           cookingTime: 120,
           restingTime: 30,
-        },
-        {
-          id: 2,
-          name: "Chicken",
+          totalTime: 120,
+        }),
+        new CookingItemImpl({
+          id: 3,
+          name: "Lamb",
           prepTime: 15,
           cookingTime: 90,
           restingTime: 30,
-        },
-        {
-          id: 3,
+          totalTime: 20,
+        }),
+        new CookingItemImpl({
+          id: 4,
           name: "Pork",
           prepTime: 10,
           cookingTime: 120,
           restingTime: 20,
-        },
+          totalTime: 12,
+        }),
       ],
     },
     {
       type: ItemType.Potatoes,
       name: "Potatoes",
       items: [
-        {
+        new CookingItemImpl({
           id: 4,
           name: "Roast",
           prepTime: 5,
           cookingTime: 60,
           restingTime: 0,
-        },
-        {
+          totalTime: 52,
+        }),
+        new CookingItemImpl({
           id: 5,
           name: "Dauphinoise",
           prepTime: 15,
           cookingTime: 60,
           restingTime: 0,
-        },
-        {
+          totalTime: 26,
+        }),
+        new CookingItemImpl({
           id: 6,
           name: "Boiled",
           prepTime: 5,
           cookingTime: 25,
           restingTime: 0,
-        },
+          totalTime: 19,
+        }),
       ],
     },
     {
       type: ItemType.Vegetables,
       name: "Boiled vegetables",
       items: [
-        {
+        new CookingItemImpl({
           id: 7,
           name: "Carrots",
           prepTime: 5,
           cookingTime: 15,
           restingTime: 0,
-        },
-        {
+          totalTime: 7,
+        }),
+        new CookingItemImpl({
           id: 8,
           name: "Peas",
           prepTime: 1,
           cookingTime: 10,
           restingTime: 0,
-        },
+          totalTime: 16,
+        }),
       ],
     },
   ];
@@ -137,7 +196,7 @@ export default function RoastDinnerPlanner() {
 
     if (doesAlreadyExist == undefined) {
       //add type
-      const selected_item: CookingItemSelected = {
+      const selected_item: CookingItemSelectedImpl = {
         ...item,
         type: type,
       };
@@ -151,8 +210,11 @@ export default function RoastDinnerPlanner() {
   // generate the step by step plan
   const generatePlan = () => {
     // Get the list of selected items and sort them by their total time
-    // debugger;
-    const plan = selectedItems.sort();
+    debugger;
+    const plan = selectedItems.sort(
+      (a: CookingItemSelectedImpl, b: CookingItemSelectedImpl) =>
+        a.totalTime - b.totalTime
+    );
 
     setGeneratedPlan(plan);
   };
@@ -227,15 +289,23 @@ export default function RoastDinnerPlanner() {
               <StarIcon className="size-6 text-blue-500" />
               Cooking Timeline
             </h2>
+
             <div className="space-y-3">
               {generatedPlan.map((step, index) => (
                 <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
+                  <h2>
+                    {step.name} ({step.type}) - total time {step.totalTime} mins
+                  </h2>
                   <p className="font-semibold text-blue-600">
-                    {step.cookingTime} minutes
+                    Prep time :{step.prepTime} minutes
                   </p>
-                  <p>
-                    {step.type} - {step.name}
+                  <p className="font-semibold text-blue-600">
+                    Cooking time :{step.cookingTime} minutes
                   </p>
+                  <p className="font-semibold text-blue-600">
+                    Resting time :{step.restingTime} minutes
+                  </p>
+
                   <p>No description yet</p>
                 </div>
               ))}
