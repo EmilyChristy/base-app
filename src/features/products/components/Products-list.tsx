@@ -10,7 +10,7 @@ import { useProducts } from "../api/get-products";
 // const page = searchParams?.get('page') ? Number(searchParams.get('page')) : 1;
 const page = 1;
 
-export const DataList = () => {
+export const ProductsList = () => {
   const productsQuery = useProducts({
     page: page,
   });
