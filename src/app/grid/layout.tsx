@@ -1,0 +1,25 @@
+// import Ads from "@/components/Ads";
+import Hero from "@/components/Hero";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+        <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+          <Hero />
+        </div>
+        <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-4 lg:grid-rows-2 border-0 border-dashed border-amber-500">
+          <div className="relative lg:row-span-2 lg:col-span-4 border-0 border-dotted border-green-300">
+            <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem] border-0 border-dotted border-blue-300"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+              <div className="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm px-4 border-0 border-dashed border-b-cyan-500">
+                {children}
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg ring-1 shadow-sm ring-black/5 lg:rounded-l-[2rem]"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

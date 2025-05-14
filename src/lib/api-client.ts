@@ -11,7 +11,8 @@ type RequestOptions = {
   cache?: RequestCache;
   next?: NextFetchRequestConfig;
 };
-console.log("HJKHJKHJKHKJHKJ");
+console.log("-- In API client --");
+
 function buildUrlWithParams(
   url: string,
   params?: RequestOptions["params"]
@@ -72,7 +73,6 @@ async function fetchApi<T>(
     `${process.env.NEXT_PUBLIC_API_URL}${url}`,
     params
   );
-  console.log(fullUrl, "*FULL URL*");
 
   const response = await fetch(fullUrl, {
     method,
@@ -89,7 +89,7 @@ async function fetchApi<T>(
   });
 
   if (!response.ok) {
-    console.log(process.env.NEXT_PUBLIC_API_URL, "- FULL URL -");
+    // console.log(process.env.NEXT_PUBLIC_API_URL, "- FULL URL -");
     const message = (await response.json()).message || response.statusText;
     if (typeof window !== "undefined") {
       useNotifications.getState().addNotification({
