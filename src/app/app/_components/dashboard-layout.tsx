@@ -1,6 +1,14 @@
 "use client";
 
-import { Home, PanelLeft, Folder, Users, User2 } from "lucide-react";
+import {
+  Home,
+  PanelLeft,
+  Folder,
+  Users,
+  User2,
+  List,
+  Grid,
+} from "lucide-react";
 import NextLink from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
@@ -47,6 +55,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   });
   const navigation = [
     { name: "Dashboard", to: paths.app.root.getHref(), icon: Home },
+    { name: "List", to: paths.app.list.getHref(), icon: List },
+    { name: "Grid", to: paths.app.grid.getHref(), icon: Grid },
     { name: "Discussions", to: paths.app.discussions.getHref(), icon: Folder },
     user.data?.role === "ADMIN" && {
       name: "Users",

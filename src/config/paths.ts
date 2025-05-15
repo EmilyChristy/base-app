@@ -23,7 +23,7 @@ export const paths = {
       getHref: () => "/",
     },
     dashboard: {
-      getHref: () => "/dashboard",
+      getHref: () => "/app",
     },
     list: {
       getHref: () => "/list",
