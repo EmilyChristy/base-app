@@ -5,6 +5,7 @@ import { Table } from "@/components/ui/table";
 // import { formatDate } from '@/utils/format';
 
 import { useProducts } from "../api/get-products";
+import { Product } from "@/types/api";
 
 // const searchParams = useSearchParams();
 // const page = searchParams?.get('page') ? Number(searchParams.get('page')) : 1;
@@ -22,7 +23,9 @@ export const ProductsList = () => {
       </div>
     );
   }
-  const products = productsQuery.data;
+
+  const products = productsQuery.data as Product[] | undefined;
+
   console.log(products, "productsQuery");
 
   if (!products) return null;
@@ -43,8 +46,8 @@ export const ProductsList = () => {
           field: "title",
         },
         {
-          title: "Price",
-          field: "price",
+          title: "Description",
+          field: "description",
           // Cell({ entry: { id } }) {
           //   return <DeleteUser id={id} />;
           // },
