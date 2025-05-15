@@ -33,6 +33,7 @@ export const ProductsGrid = () => {
     >
       {products?.map((product: Product) => {
         // const LinkIcon = link.icon;
+
         return (
           <>
             <div
