@@ -24,7 +24,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <html lang="en">
-      <body style={{ border: "8px dotted #22ee55" }}>
+      <body>
         <AppProvider>
           <HydrationBoundary state={dehydratedState}>
             {children}

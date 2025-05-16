@@ -8,6 +8,7 @@ import {
   User2,
   List,
   Grid,
+  TvIcon,
 } from "lucide-react";
 import NextLink from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -57,6 +58,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { name: "Dashboard", to: paths.app.root.getHref(), icon: Home },
     { name: "List", to: paths.app.list.getHref(), icon: List },
     { name: "Grid", to: paths.app.grid.getHref(), icon: Grid },
+    { name: "Bento", to: paths.app.bento.getHref(), icon: TvIcon },
     { name: "Discussions", to: paths.app.discussions.getHref(), icon: Folder },
     user.data?.role === "ADMIN" && {
       name: "Users",

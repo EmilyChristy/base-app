@@ -31,6 +31,9 @@ export const paths = {
     grid: {
       getHref: () => "/app/grid",
     },
+    bento: {
+      getHref: () => "/app/bento",
+    },
     discussions: {
       getHref: () => "/app/discussions",
     },
