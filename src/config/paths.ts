@@ -26,10 +26,10 @@ export const paths = {
       getHref: () => "/app",
     },
     list: {
-      getHref: () => "/list",
+      getHref: () => "/app/list",
     },
     grid: {
-      getHref: () => "/grid",
+      getHref: () => "/app/grid",
     },
     discussions: {
       getHref: () => "/app/discussions",
