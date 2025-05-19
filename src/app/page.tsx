@@ -1,11 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/config/paths";
+// import { LoginForm } from "@/features/auth/components/login-form";
 import { checkLoggedIn } from "@/utils/auth";
 import { ArrowBigRightDashIcon } from "lucide-react";
+// import { useRouter, useSearchParams } from "next/navigation";
 
 const HomePage = () => {
   const isLoggedIn = checkLoggedIn();
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+  // const redirectTo = searchParams?.get("redirectTo");
 
   return (
     <div className="flex h-screen items-center bg-white">
@@ -13,12 +18,23 @@ const HomePage = () => {
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
           <span className="block">Base app, built from Bulletproof React</span>
         </h2>
-        <img src="/logo.svg" alt="react" />
+        {/* <img src="/logo.svg" alt="react" /> */}
+        {/* <LoginForm
+          onSuccess={() =>
+            router.replace(
+              `${
+                redirectTo
+                  ? `${decodeURIComponent(redirectTo)}`
+                  : paths.app.dashboard.getHref()
+              }`
+            )
+          }
+        /> */}
         <p>
           Starter app from foundation using best practices For Building React
           Applications
         </p>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex justify-center border-4 border-dashed border-purple-600">
           <div className="inline-flex rounded-md shadow">
             <Link
               href={
@@ -32,13 +48,6 @@ const HomePage = () => {
           </div>
 
           <div className="ml-3 inline-flex rounded-md shadow">
-            {/* <Link
-              href={
-                isLoggedIn
-                  ? paths.app.root.getHref()
-                  : paths.auth.login.getHref()
-              }
-            > */}
             <Link href={paths.app.dashboard.getHref()}>
               <Button
                 icon={
@@ -106,6 +115,9 @@ const HomePage = () => {
               </Button>
             </Link>
           </div>
+        </div>
+        <div className="mt-8 flex justify-center border-4 border-dashed border-orange-600">
+          You are {isLoggedIn ? "logged in" : "not logged in"}
         </div>
       </div>
     </div>
