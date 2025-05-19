@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "run-mock-server": "tsx ./mock-server.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -35,13 +36,22 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@mswjs/data": "^0.16.1",
+    "@mswjs/http-middleware": "^0.10.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/cors": "^2.8.17",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
+    "pino-http": "^10.1.0",
+    "pino-pretty": "^11.1.0",
+    "js-cookie": "^3.0.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
     "tailwindcss": "^4",
+    "tsx": "^4.17.0",
     "typescript": "^5"
   }
 }
