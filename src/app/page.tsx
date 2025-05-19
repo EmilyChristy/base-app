@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/config/paths";
-// import { checkLoggedIn } from '@/utils/auth';
+import { checkLoggedIn } from "@/utils/auth";
+import { ArrowBigRightDashIcon } from "lucide-react";
 
 const HomePage = () => {
-  // const isLoggedIn = checkLoggedIn();
+  const isLoggedIn = checkLoggedIn();
 
   return (
     <div className="flex h-screen items-center bg-white">
@@ -19,6 +20,18 @@ const HomePage = () => {
         </p>
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
+            <Link
+              href={
+                isLoggedIn
+                  ? paths.app.root.getHref()
+                  : paths.auth.login.getHref()
+              }
+            >
+              <Button icon={<ArrowBigRightDashIcon />}>Login / Register</Button>
+            </Link>
+          </div>
+
+          <div className="ml-3 inline-flex rounded-md shadow">
             {/* <Link
               href={
                 isLoggedIn
