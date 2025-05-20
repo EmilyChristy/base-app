@@ -1,6 +1,7 @@
-/* @import "tailwindcss/preflight"; */
 @import "tailwindcss";
 @tailwind utilities;
+
+@config "../../tailwind.config.cjs";
 
 @layer base {
   :root {
@@ -66,14 +67,14 @@
   }
 }
 
-/* @layer base {
+@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
-} */
+}
 
 body {
   margin: 0;
