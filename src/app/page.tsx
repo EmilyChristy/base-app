@@ -34,7 +34,7 @@ const HomePage = () => {
           Starter app from foundation using best practices For Building React
           Applications
         </p>
-        <div className="mt-8 flex justify-center border-4 border-dashed border-purple-600">
+        <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
             <Link
               href={
@@ -50,6 +50,7 @@ const HomePage = () => {
           <div className="ml-3 inline-flex rounded-md shadow">
             <Link href={paths.app.dashboard.getHref()}>
               <Button
+                variant="secondary"
                 icon={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +117,7 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-        <div className="mt-8 flex justify-center border-4 border-dashed border-orange-600">
+        <div className="mt-8 flex justify-center">
           You are {isLoggedIn ? "logged in" : "not logged in"}
         </div>
       </div>
