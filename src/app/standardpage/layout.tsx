@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
           <Hero />
         </div>
-        <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-4 lg:grid-rows-2 border-0 border-dashed border-amber-500">
+        <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-4 lg:grid-rows-2 border-4 border-dashed border-amber-500">
           <div className="relative lg:row-span-2 lg:col-span-4 border-0 border-dotted border-green-300">
             <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem] border-0 border-dotted border-blue-300"></div>
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
